@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basis Competitieplatform</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Competitieplatform</h1>
+
+        <!-- Startscherm -->
+        <section id="start-screen">
+            <div class="card">
+                <h2>Startscherm</h2>
+                <div class="actions">
+                    <button id="btn-join-game" class="btn primary lg">Deelnemen aan wedstrijd</button>
+                    <button id="btn-new-game" class="btn">Nieuwe wedstrijd hosten</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Host setup: naam vragen en kamer aanmaken -->
+        <section id="host-setup" class="hidden">
+            <div class="card">
+                <h2>Nieuwe wedstrijd starten</h2>
+                <form id="host-form">
+                    <label for="host-name">Jouw naam</label>
+                    <input id="host-name" name="name" type="text" required maxlength="32" placeholder="Bijv. Alex" />
+                    <button type="submit" class="btn primary">Maak spel aan</button>
+                    <button type="button" id="host-cancel" class="btn link">Annuleren</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Host lobby -->
+        <section id="host-lobby" class="hidden">
+            <div class="card">
+                <h2>Lobby (Host)</h2>
+                <p class="muted">Deel deze code met spelers:</p>
+                <div class="room-code" id="host-room-code">----</div>
+                <p class="muted" id="host-you-are"></p>
+                <h3>Spelers</h3>
+                <ul id="host-player-list" class="list"></ul>
+                <div class="actions">
+                    <button id="btn-start-game" class="btn success">Start wedstrijd</button>
+                    <button id="btn-host-back" class="btn">Terug</button>
+                </div>
+                <div id="host-status" class="status"></div>
+            </div>
+        </section>
+
+        <!-- Join scherm -->
+        <section id="join-screen" class="hidden">
+            <div class="card">
+                <h2>Deelnemen aan wedstrijd</h2>
+                <form id="join-form">
+                    <label for="join-name">Jouw naam</label>
+                    <input id="join-name" name="name" type="text" required maxlength="32" placeholder="Bijv. Sam" />
+
+                    <label for="join-code">Wedstrijdcode</label>
+                    <input id="join-code" name="code" type="text" required maxlength="6" placeholder="Bijv. X7B3" />
+
+                    <button type="submit" class="btn primary">Deelnemen</button>
+                    <button type="button" id="join-cancel" class="btn link">Annuleren</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Deelnemer wachtkamer -->
+        <section id="player-wait" class="hidden">
+            <div class="card">
+                <h2>Lobby (Deelnemer)</h2>
+                <p class="muted">Wedstrijdcode:</p>
+                <div class="room-code" id="player-room-code">----</div>
+                <p class="muted" id="player-you-are"></p>
+                <p id="player-wait-text">Wachten op start van de wedstrijd...</p>
+                <div id="player-status" class="status"></div>
+                <div class="actions">
+                    <button id="btn-leave" class="btn">Verlaten</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wedstrijd gestart scherm (tijdelijk) -->
+        <section id="game-started" class="hidden">
+            <div class="card">
+                <h2>Wedstrijd gestart!</h2>
+                <p>Dit is een placeholder-scherm. Hier kun je later de wedstrijdmechanieken tonen.</p>
+                <div class="actions">
+                    <button id="btn-back-home" class="btn">Terug naar start</button>
+                </div>
+            </div>
+        </section>
+
+        
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        // Simpele progressive enhancement: autofocus op eerste zichtbare input
+        window.addEventListener('DOMContentLoaded', () => {
+            const firstInput = document.querySelector('section:not(.hidden) input');
+            if (firstInput) firstInput.focus();
+        });
+    </script>
+</body>
+</html>
+
+
