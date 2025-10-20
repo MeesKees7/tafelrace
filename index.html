@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Basis Competitieplatform</title>
+    <title>Tafel Wedstrijd</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <div class="container">
-        <h1>Competitieplatform</h1>
+        <h1>Tafel Wedstrijd</h1>
 
         <!-- Startscherm -->
         <section id="start-screen">
@@ -28,16 +28,73 @@
                 <form id="host-form">
                     <label for="host-name">Jouw naam</label>
                     <input id="host-name" name="name" type="text" required maxlength="32" placeholder="Bijv. Alex" />
+                    
+                    <label>Tafels selecteren</label>
+                    <div class="table-selection">
+                        <div class="preset-buttons">
+                            <button type="button" class="btn preset" data-preset="basic">Tafel van 1, 2, 5 en 10</button>
+                            <button type="button" class="btn preset" data-preset="all">Tafel van 1 t/m 10</button>
+                            <button type="button" class="btn preset" data-preset="advanced">Tafel van 6 t/m 9</button>
+                        </div>
+                        
+                        <div class="individual-tables">
+                            <label>Of selecteer losse tafels:</label>
+                            <div class="table-checkboxes">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="table" value="1" />
+                                    <span>Tafel van 1</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="table" value="2" />
+                                    <span>Tafel van 2</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="table" value="3" />
+                                    <span>Tafel van 3</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="table" value="4" />
+                                    <span>Tafel van 4</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="table" value="5" />
+                                    <span>Tafel van 5</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="table" value="6" />
+                                    <span>Tafel van 6</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="table" value="7" />
+                                    <span>Tafel van 7</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="table" value="8" />
+                                    <span>Tafel van 8</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="table" value="9" />
+                                    <span>Tafel van 9</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="table" value="10" />
+                                    <span>Tafel van 10</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <button type="submit" class="btn primary">Maak spel aan</button>
                     <button type="button" id="host-cancel" class="btn link">Annuleren</button>
                 </form>
+                <div id="host-status" class="status"></div>
             </div>
         </section>
 
         <!-- Host lobby -->
         <section id="host-lobby" class="hidden">
             <div class="card">
-                <h2>Lobby (Host)</h2>
+                <h2 id="host-lobby-title">Lobby (Host)</h2>
                 <p class="muted">Deel deze code met spelers:</p>
                 <div class="room-code" id="host-room-code">----</div>
                 <p class="muted" id="host-you-are"></p>
@@ -65,16 +122,18 @@
                     <button type="submit" class="btn primary">Deelnemen</button>
                     <button type="button" id="join-cancel" class="btn link">Annuleren</button>
                 </form>
+                <div id="join-status" class="status"></div>
             </div>
         </section>
 
         <!-- Deelnemer wachtkamer -->
         <section id="player-wait" class="hidden">
             <div class="card">
-                <h2>Lobby (Deelnemer)</h2>
+                <h2 id="player-lobby-title">Lobby (Deelnemer)</h2>
                 <p class="muted">Wedstrijdcode:</p>
                 <div class="room-code" id="player-room-code">----</div>
                 <p class="muted" id="player-you-are"></p>
+                <div id="player-wait-title" class="wait-title"></div>
                 <p id="player-wait-text">Wachten op start van de wedstrijd...</p>
                 <div id="player-status" class="status"></div>
                 <div class="actions">
@@ -83,13 +142,53 @@
             </div>
         </section>
 
-        <!-- Wedstrijd gestart scherm (tijdelijk) -->
+        <!-- Wedstrijd scherm -->
         <section id="game-started" class="hidden">
             <div class="card">
-                <h2>Wedstrijd gestart!</h2>
-                <p>Dit is een placeholder-scherm. Hier kun je later de wedstrijdmechanieken tonen.</p>
-                <div class="actions">
+                <div class="game-header">
+                    <div class="game-info">
+                        <h2 id="game-title">Tafelsommen Wedstrijd</h2>
+                        <div class="game-stats">
+                            <div class="stat">
+                                <span class="stat-label">Tijd:</span>
+                                <span id="game-timer">01:00</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Vraag:</span>
+                                <span id="question-counter">1</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Goed:</span>
+                                <span id="correct-counter">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-content">
+                    <div id="question-display" class="question-display hidden">
+                        <div id="question-text" class="question-text"></div>
+                    </div>
+                    
+                </div>
+                
+                <div id="game-end" class="game-end hidden">
+                    <h3>Wedstrijd afgelopen!</h3>
+                    <div id="final-score" class="final-score"></div>
                     <button id="btn-back-home" class="btn">Terug naar start</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scoreboard scherm -->
+        <section id="scoreboard" class="hidden">
+            <div class="card">
+                <h2 id="scoreboard-title">Top 3</h2>
+                <div id="leaderboard" class="leaderboard">
+                    <!-- Top 3 spelers worden hier dynamisch ingeladen -->
+                </div>
+                <div class="actions">
+                    <button id="btn-back-home-from-scores" class="btn">Terug naar start</button>
                 </div>
             </div>
         </section>

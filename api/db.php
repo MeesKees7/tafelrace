@@ -23,7 +23,9 @@ function init_schema(PDO $pdo): void {
     $pdo->exec('CREATE TABLE IF NOT EXISTS rooms (
         code TEXT PRIMARY KEY,
         status TEXT NOT NULL DEFAULT "wachtend",
-        created_at TEXT NOT NULL
+        created_at TEXT NOT NULL,
+        table_config TEXT DEFAULT NULL,
+        game_started_at TEXT DEFAULT NULL
     )');
 
     $pdo->exec('CREATE TABLE IF NOT EXISTS players (
@@ -31,6 +33,37 @@ function init_schema(PDO $pdo): void {
         room_code TEXT NOT NULL,
         name TEXT NOT NULL,
         joined_at TEXT NOT NULL,
+        FOREIGN KEY(room_code) REFERENCES rooms(code) ON DELETE CASCADE
+    )');
+
+    $pdo->exec('CREATE TABLE IF NOT EXISTS game_questions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        room_code TEXT NOT NULL,
+        question_number INTEGER NOT NULL,
+        question TEXT NOT NULL,
+        answer INTEGER NOT NULL,
+        FOREIGN KEY(room_code) REFERENCES rooms(code) ON DELETE CASCADE
+    )');
+
+    $pdo->exec('CREATE TABLE IF NOT EXISTS player_answers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        room_code TEXT NOT NULL,
+        player_name TEXT NOT NULL,
+        question_number INTEGER NOT NULL,
+        answer INTEGER DEFAULT NULL,
+        is_correct INTEGER DEFAULT 0,
+        answered_at TEXT DEFAULT NULL,
+        FOREIGN KEY(room_code) REFERENCES rooms(code) ON DELETE CASCADE
+    )');
+
+    $pdo->exec('CREATE TABLE IF NOT EXISTS player_scores (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        room_code TEXT NOT NULL,
+        player_name TEXT NOT NULL,
+        correct_answers INTEGER DEFAULT 0,
+        total_time_seconds INTEGER DEFAULT NULL,
+        completed_at TEXT DEFAULT NULL,
+        game_started_at TEXT DEFAULT NULL,
         FOREIGN KEY(room_code) REFERENCES rooms(code) ON DELETE CASCADE
     )');
 }

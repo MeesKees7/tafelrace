@@ -65,6 +65,272 @@ input{
 
 .status{margin-top:8px;color:var(--muted)}
 
+/* Tafel selectie styling */
+.table-selection {
+  margin: 16px 0;
+}
+
+.preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.btn.preset {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.btn.preset:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.btn.preset.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.individual-tables {
+  margin-top: 16px;
+}
+
+.table-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.checkbox-label:hover {
+  background: var(--card);
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.checkbox-label input[type="checkbox"]:checked + span {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.checkbox-label:has(input[type="checkbox"]:checked) {
+  background: var(--card);
+  border-color: var(--primary);
+}
+
+/* Spel interface styling */
+.game-header {
+  margin-bottom: 24px;
+}
+
+.game-stats {
+  display: flex;
+  gap: 24px;
+  margin-top: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  min-width: 80px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.stat span:last-child {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.game-content {
+  text-align: center;
+}
+
+.question-display {
+  margin: 32px 0;
+}
+
+.question-text {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 32px 0;
+  text-align: center;
+}
+
+.question-text input {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid var(--primary);
+  outline: none;
+  width: 120px;
+  text-align: center;
+  margin-left: 8px;
+  /* Verwijder schuifbalkjes */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.question-text input::-webkit-outer-spin-button,
+.question-text input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .question-text {
+    font-size: 36px;
+    margin: 24px 0;
+  }
+  
+  .question-text input {
+    font-size: 36px;
+    width: 100px;
+  }
+  
+  .game-stats {
+    gap: 12px;
+  }
+  
+  .stat {
+    min-width: 70px;
+    padding: 8px;
+  }
+}
+
+
+
+.game-end {
+  text-align: center;
+  margin: 32px 0;
+}
+
+.final-score {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary);
+  margin: 16px 0;
+}
+
+/* Scoreboard styling */
+.leaderboard {
+  margin: 24px 0;
+}
+
+.leaderboard-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  margin: 8px 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.leaderboard-item.first {
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #000;
+  border-color: #ffd700;
+}
+
+.leaderboard-item.second {
+  background: linear-gradient(135deg, #c0c0c0, #e5e5e5);
+  color: #000;
+  border-color: #c0c0c0;
+}
+
+.leaderboard-item.third {
+  background: linear-gradient(135deg, #cd7f32, #daa520);
+  color: #fff;
+  border-color: #cd7f32;
+}
+
+.leaderboard-position {
+  font-size: 24px;
+  font-weight: 700;
+  min-width: 40px;
+}
+
+.leaderboard-name {
+  font-size: 18px;
+  font-weight: 600;
+  flex: 1;
+  text-align: left;
+  margin-left: 16px;
+}
+
+.leaderboard-score {
+  font-size: 16px;
+  color: #000000; /* Zwart voor betere leesbaarheid */
+}
+
+/* Gedeelde plaatsen styling */
+.leaderboard-item.first + .leaderboard-item.first {
+  border-top: none;
+  margin-top: 0;
+}
+
+.leaderboard-item.second + .leaderboard-item.second {
+  border-top: none;
+  margin-top: 0;
+}
+
+.leaderboard-item.third + .leaderboard-item.third {
+  border-top: none;
+  margin-top: 0;
+}
+
+/* Wait title styling */
+.wait-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary);
+  text-align: center;
+  margin: 16px 0;
+  padding: 12px;
+  background: rgba(255, 165, 0, 0.1);
+  border-radius: 8px;
+  border: 2px solid rgba(255, 165, 0, 0.3);
+}
+
 
 
 

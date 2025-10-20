@@ -5,8 +5,14 @@ try {
     $db = get_db();
     $input = read_json();
     $name = trim($input['name'] ?? '');
+    $tableConfig = $input['tableConfig'] ?? null;
+    
     if ($name === '') {
         json_response(['ok' => false, 'error' => 'Naam is vereist'], 400);
+    }
+    
+    if ($tableConfig === null) {
+        json_response(['ok' => false, 'error' => 'Tafel configuratie is vereist'], 400);
     }
 
     // Genereer unieke code
@@ -26,8 +32,8 @@ try {
 
     // Maak room aan
     $now = (new DateTimeImmutable('now'))->format(DateTimeInterface::ATOM);
-    $stmt = $db->prepare('INSERT INTO rooms(code, status, created_at) VALUES(?, "wachtend", ?)');
-    $stmt->execute([$code, $now]);
+    $stmt = $db->prepare('INSERT INTO rooms(code, status, created_at, table_config) VALUES(?, "wachtend", ?, ?)');
+    $stmt->execute([$code, $now, $tableConfig]);
 
     // Voeg host als speler toe
     $stmt = $db->prepare('INSERT INTO players(room_code, name, joined_at) VALUES(?, ?, ?)');
